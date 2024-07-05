@@ -1,0 +1,79 @@
+<mat-card>
+    <form (ngSubmit)="onSubmit()" *ngIf="form" [formGroup]="form">
+        <mat-card-title>Login</mat-card-title>
+        <mat-card-content>
+            <mat-card>
+
+                <div>
+                    <mat-form-field [hideRequiredMarker]="true" class="header" appearance="fill">
+                        <mat-label>Username</mat-label>
+                        <input formControlName="username" matInput placeholder="Username" class="form-control">
+                        <mat-error *ngIf="IsValid">Invalid</mat-error>
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field class="header" [hideRequiredMarker]="true" appearance="fill">
+                        <mat-label>Password</mat-label>
+                        <input name="password" matInput placeholder="Custom" formControlName="password"
+                            class="form-control">
+                        <mat-error *ngIf="IsValid">Invalid</mat-error>
+                    </mat-form-field>
+                </div>
+
+            </mat-card>
+
+            <div>
+
+                <table>
+                    <tr>
+                        <td>
+                            <button mat-stroked-button [disabled]="loading">Login</button>
+                            <mat-progress-spinner *ngIf="loading" class="example-margin" [color]="color" [mode]="mode"
+                            [value]="value">
+                            </mat-progress-spinner>
+                        </td>
+                        <td>
+                            <a mat-raised-button href="../register" target="_blank">Register</a>
+                        </td>
+                        <td>
+                            <button mat-flat-button (click)="register()">Register</button>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+        </mat-card-content>
+
+    </form>
+
+</mat-card>
+
+<!-- 
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && IsValid }" />
+                <div *ngIf="submitted && IsValid" class="invalid-feedback">
+                    <div *ngIf="IsValid">Username is required</div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && IsValid }" />
+                <div *ngIf="submitted && IsValid" class="invalid-feedback">
+                    <div *ngIf="IsValid">Password is required</div>
+                </div>
+            </div>
+            <div>
+                <button [disabled]="loading" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm me-1"></span>
+                    Login
+                </button>
+                <a routerLink="../register" class="btn btn-link">Register</a>
+  
+                <button type="button" (click)="register()" class="btn btn-secondary">Register</button>
+  
+            </div>
+        </form>
+   -->

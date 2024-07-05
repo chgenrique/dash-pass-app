@@ -1,0 +1,33 @@
+.google-login-btn {
+  background-image: url('src/assets/google-logo.png');
+  background-repeat: no-repeat;
+  background-size: 20%;
+  background-position: 10%;
+  padding-left: 10%;
+}
+
+.mat-mdc-card-title {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  justify-content: center;
+}
+
+mat-card-2 {
+  margin: 10% auto;
+  width: 50%;
+}
+
+mat-card {
+  max-width: 100%;
+  width: 100%;
+  margin: 2em auto;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.example-margin {
+  margin: 0 10px;
+}
