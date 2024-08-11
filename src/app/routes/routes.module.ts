@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CountriesComponent } from './countries/countries.component';
 import { AuthGuardService } from '../auth-guard.service';
-import { MainComponent } from '../main/main.component';
 import { LoginComponent } from '../login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { MainComponent } from '../main/main.component';
 
 
 const routes: Routes =
@@ -23,14 +24,15 @@ const routes: Routes =
       , canActivate: [AuthGuardService]
     },
     // otherwise redirect to home
-    { path: '**', redirectTo: '' }
+    { path: '**', redirectTo: '', pathMatch: 'full' }
   ]
 
 
 @NgModule({
   declarations: [
     LoginComponent,
-    CountriesComponent
+    CountriesComponent,
+    DashboardComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
