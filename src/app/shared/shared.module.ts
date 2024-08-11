@@ -18,7 +18,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    //CardComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,

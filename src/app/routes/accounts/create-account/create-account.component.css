@@ -1,0 +1,33 @@
+.form-element {
+    padding: 5px 0px 25px 2px;
+    width: 100%;
+}
+
+mat-card {
+    max-width: 90%;
+    margin: 2em auto;
+}
+
+mat-form-field.full-width {
+    width: 100%;
+    margin:2%;
+}
+
+mat-card {
+    max-width: 90%;
+    margin: 2em auto;
+  }
+
+div.form-element-container {
+    display: inline-flex;
+}
+
+.form-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    margin: 10px;
+}

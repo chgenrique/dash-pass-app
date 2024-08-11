@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { User } from './models/user';
-import { AccountService } from './services/account.service';
 import { Router } from '@angular/router';
+import { LoginService } from './services/login.service';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +28,7 @@ export class AppComponent {
     this.navbarCollapsed = !this.navbarCollapsed;
   }
 
-  constructor(private accountService: AccountService, private router: Router) { 
+  constructor(private authenticationService: LoginService, private router: Router) { 
     this.CheckAuthToShow();
   }
 
@@ -39,14 +39,14 @@ export class AppComponent {
 
   CheckAuthToShow(): void {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser')!);
-    this.accountService.user.subscribe(u => {
+    this.authenticationService.user.subscribe(u => {
       this.allowToShow = u != null && u.token != null;
     });
     
   }
 
   logout(): void {
-    this.accountService.logout();
+    this.authenticationService.logout();
     //.then(() => this.router.navigate(['login']));
   }
 }

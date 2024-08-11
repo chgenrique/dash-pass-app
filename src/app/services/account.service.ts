@@ -1,60 +1,36 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, of } from 'rxjs';
-import { User } from '../models/user';
-import { Router } from '@angular/router';
+import { Observable, map, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Account } from '../models/account';
+import { nanoid } from 'nanoid'
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
 
-  private userSubject: BehaviorSubject<User | null>;
-  public user: Observable<User | null>;
-  
-  constructor(private router: Router) { 
-    this.userSubject = new BehaviorSubject(JSON.parse(localStorage.getItem('currentUser')!));
-    this.user = this.userSubject.asObservable();
+  constructor(private http: HttpClient) { }
+
+  getContact(id: string): Observable<Account | undefined> {
+    return this.http.get<Account>(`api/accounts/${id}`)
+      .pipe(map(c => {
+        const cd = c.createDate ? new Date(c.createDate) : null;
+        return { ...c, createDate: cd }
+      }));
   }
 
-  public get userValue() {
-    return this.userSubject.value;
+  getAllContacts(): Observable<Account[]> {
+    return this.http.get<Account[]>('api/accounts');
   }
 
-  login(username: string, password: string) {
-    return this.getUserAsObservable()
-        .pipe(map(u => {
-     
-            console.log("pipe map");
-            console.log(u);
+  saveContact(a: Partial<Account>): Observable<Account> {
+    const headers = { headers: { 'Content-Type': 'application/json' } };
 
-            if (u && u.token) {
-              // store user details and jwt token in local storage to keep user logged in between page refreshes
-              localStorage.setItem('currentUser', JSON.stringify(u));
-              this.userSubject.next(u);
-            }
-
-            return u;
-        }));
-  }
-
-  logout() {
-    // remove user from local storage and set current user to null
-    localStorage.removeItem('currentUser');
-    this.userSubject.next(null);
-
-    //TBD
-    this.router.navigate(['/login']);
-
-    //this.router.navigate(['/account/login']);
-  }
-
-  getUserAsObservable(): Observable<User> {
-    return of({
-       id: 1001,
-       username: '',
-       firstName: 'User',
-       lastName: 'Doe',
-       token: 'xcFD100jushYUI-%sdf'
-    });
+    if (!a.id || a.id === 0) {
+      let newContact: Partial<Account> = { ...a, id: +nanoid(5) };
+      return this.http.post<Account>('api/accounts/', newContact, headers)
+    }
+    else
+      return this.http.put<Account>('api/accounts/', a, headers)
   }
 }
