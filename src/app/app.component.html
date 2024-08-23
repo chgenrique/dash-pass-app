@@ -8,7 +8,7 @@
       <button mat-button [matMenuTriggerFor]="aboveMenu">Accounts</button>
       <mat-menu #aboveMenu="matMenu" yPosition="above">
         <button mat-menu-item (click)="onContextMenuAction('accounts')">Account List</button>
-        <button mat-menu-item (click)="onContextMenuAction('accounts/create')">New Account</button>
+        <button mat-menu-item (click)="onContextMenuAction('accounts/details')">New Account</button>
       </mat-menu>
     
       <button mat-button [matMenuTriggerFor]="settingsMenu">Settings</button>
