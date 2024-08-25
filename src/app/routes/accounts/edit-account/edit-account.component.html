@@ -1,1 +1,232 @@
-<p>edit-account works!</p>
+
+<div class="container" novalidate>
+    <form [formGroup]="formAccount" (ngSubmit)="onSubmit(formAccount.value)" class="form">
+
+        <mat-card-title>
+            {{type}} Account Entry
+        </mat-card-title>
+
+        <mat-card-content>
+            <mat-card>
+                <div class="form-element-container">
+                    <mat-form-field class="full-width">
+                        <mat-label>Title</mat-label>
+                        <input matInput placeholder="Title" formControlName="title">
+                        <mat-error *ngIf="formAccount.controls['title'].hasError('required')">Title
+                            is
+                            <strong>required</strong></mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width">
+                        <mat-label>Description</mat-label>
+                        <input matInput placeholder="Description" formControlName="description">
+                    </mat-form-field>
+
+                </div>
+                <div class="form-element-container">
+                    <mat-form-field class="full-width">
+                        <mat-label>UserName</mat-label>
+                        <input matInput placeholder="UserName" formControlName="userName" class="form-control">
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width">
+                        <mat-label>Account Password</mat-label>
+                        <input matInput placeholder="Account Password" formControlName="accountPassword"
+                            class="form-control">
+                        <mat-error *ngIf="formAccount.controls['accountPassword'].hasError('required')">Account Password
+                            is
+                            <strong>required</strong></mat-error>
+                    </mat-form-field>
+
+                </div>
+                <div class="form-element-container">
+                    <mat-form-field class="half-width">
+                        <mat-label>Email</mat-label>
+                        <input type="email" matInput formControlName="email" class="form-control">
+
+                        <mat-error
+                            *ngIf="formAccount.controls['email'].hasError('email') && !formAccount.controls['email'].hasError('required')">Please
+                            enter a valid email address</mat-error>
+
+                        <mat-error *ngIf="formAccount.controls['email'].hasError('required')">Email is
+                            <strong>required</strong></mat-error>
+
+                    </mat-form-field>
+
+                    <div class="checkbox-form-element">
+                        <mat-checkbox formControlName="emailAsUser">Email as user</mat-checkbox>
+                    </div>
+
+                </div>
+
+
+                <div class="form-element-container">
+                    <mat-form-field class="full-width" [hideRequiredMarker]="true" appearance="fill">
+                        <mat-label>Spec URL</mat-label>
+                        <input matInput placeholder="Enter URL" formControlName="url" class="form-control">
+                        <mat-error *ngIf="formAccount.controls['url'].hasError('required')">URL
+                            is
+                            <strong>required</strong></mat-error>
+                    </mat-form-field>
+
+                    
+                    <mat-form-field class="full-width">
+                        <mat-label>AccountNumber</mat-label>
+                        <input matInput formControlName="accountNumber" class="form-control">
+
+                        <mat-error
+                            *ngIf="formAccount.controls['accountNumber'].hasError('accountNumber') && !formAccount.controls['email'].hasError('required')">Please
+                            enter a valid accountNumber</mat-error>
+
+                        <mat-error *ngIf="formAccount.controls['accountNumber'].hasError('invalid')">AccountNumber is
+                            <strong>invalid</strong></mat-error>
+
+                    </mat-form-field>
+                </div>
+
+                <div class="form-element-container">
+                    <mat-form-field class="full-width">
+                        <mat-label>Notes</mat-label>
+                        <input matInput placeholder="notes" formControlName="notes" class="form-control">
+                    </mat-form-field>
+
+                    <mat-form-field class="full-width">
+                        <mat-label>Recovery Code</mat-label>
+                        <input matInput placeholder="Recovery Code" formControlName="recoveryCode" class="form-control">
+                    </mat-form-field>
+
+                </div>
+
+                <div class="form-element-container">
+                    <mat-form-field class="full-width">
+                        <mat-label>Categories</mat-label>
+                        <mat-select formControlName="categories" multiple>
+                            <!-- 
+                            <mat-select-trigger> <span *ngIf="hasCategories">{{(hasCategories && firstCategoryValue) || ''}}</span>
+                                <span *ngIf="(formAccount.controls['categories'].value?.length || 0) > 1" 
+                                    class="example-additional-selection">
+                                    (+{{(formAccount.controls['categories'].value?.length || 0) - 1}} {{formAccount.controls['categories'].value?.length === 2 ? 'other' : 'others'}})
+                                </span>
+                        
+                            </mat-select-trigger>-->
+
+                            <mat-option *ngFor="let c of categoryList" [value]="c">
+                                {{c.description}}
+                            </mat-option>
+
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <mat-card-title class="question-card-title">
+                    Questions
+                </mat-card-title>
+                <mat-card class="questions">
+                    <div class="button-row">
+                        <button mat-raised-button type="button" color="primary" [disabled]="!securityQuestions.valid"
+                            (click)="addQuestion()">
+                            Add Question
+                        </button>
+                    </div>
+
+                    <table style="width: 100%; table-layout: fixed;">
+                        <tbody formArrayName="securityQuestions"
+                            *ngFor="let question of securityQuestions.controls; let i=index">
+                            <tr [formGroupName]="i">
+
+                                <td class="section-text-area">
+                                    <mat-form-field class="full-section-width" [hideRequiredMarker]="true"
+                                        appearance="fill">
+                                        <mat-label>Order</mat-label>
+                                        <input matInput placeholder="Order" formControlName="order"
+                                            class="form-control">
+
+                                        <mat-error *ngIf="formArrayFieldIsInvalid(i,'name')">Question is
+                                            required.</mat-error>
+                                    </mat-form-field>
+                                </td>
+
+                                <td class="section-text-area">
+                                    <mat-form-field class="full-section-width" [hideRequiredMarker]="true"
+                                        appearance="fill">
+                                        <mat-label>Question</mat-label>
+                                        <input matInput placeholder="Question" formControlName="name"
+                                            class="form-control">
+
+                                        <mat-error *ngIf="formArrayFieldIsInvalid(i,'name')">Question is
+                                            required.</mat-error>
+                                    </mat-form-field>
+                                </td>
+
+                                <td class="section-text-area">
+                                    <mat-form-field class="full-section-width" [hideRequiredMarker]="true"
+                                        appearance="fill">
+                                        <mat-label>Answer</mat-label>
+                                        <input matInput placeholder="Answer" formControlName="answer"
+                                            class="form-control">
+
+                                        <mat-error *ngIf="formArrayFieldIsInvalid(i,'answer')">name is
+                                            required.</mat-error>
+                                    </mat-form-field>
+                                </td>
+
+                                <td class="section-text-area" *ngIf="!permissionToDelete">
+                                    <div class="icon area">
+                                        <button mat-icon-button type="button" color="primary" [disableRipple]="true"
+                                            class="section-row-icon" matTooltip="Delete Section"
+                                            (click)="deleteQuestionSection(i)">
+                                            <mat-icon [inline]="true">clear</mat-icon>
+                                        </button>
+                                    </div>
+                                </td>
+
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+
+                    <!-- 
+                    <div formArrayName="securityQuestions">
+                      <div *ngFor="let question of securityQuestions.controls; let i=index" [formGroupName]="i"
+                        class="flex-column">
+
+                        <mat-form-field class="full-section-width" [hideRequiredMarker]="true" appearance="fill">
+                            <mat-label>Question</mat-label>
+                            <input matInput placeholder="Question" formControlName="name" class="form-control">
+
+                            <mat-error *ngIf="formArrayFieldIsInvalid(i,'name')">Question is
+                                required.</mat-error>
+                        </mat-form-field>
+
+
+                        <mat-form-field class="full-section-width" [hideRequiredMarker]="true" appearance="fill">
+                            <mat-label>Answer</mat-label>
+                            <input matInput placeholder="Answer" formControlName="answer" class="form-control">
+
+                            <mat-error *ngIf="formArrayFieldIsInvalid(i,'answer')">name is
+                                required.</mat-error>
+                        </mat-form-field>
+
+                        
+                      </div>
+                    </div> -->
+                </mat-card>
+
+
+            </mat-card>
+        </mat-card-content>
+
+        <div class="form-buttons">
+            <button mat-raised-button class="button" color="secondary" type="button" (click)="clear()">Clear</button>
+            <button mat-raised-button color="primary" type="submit" class="button"
+                [disabled]="!formAccount.valid">Submit Form</button>
+        </div>
+
+    </form>
+</div>
+
+
+<!--  categories: [], -->
