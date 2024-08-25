@@ -123,7 +123,7 @@
                 </mat-card-title>
                 <mat-card class="questions">
                     <div class="button-row">
-                        <button mat-raised-button color="primary" [disabled]="!securityQuestions.valid"
+                        <button mat-raised-button type="button" color="primary" [disabled]="!securityQuestions.valid"
                             (click)="addQuestion()">
                             Add Question
                         </button>
@@ -172,7 +172,7 @@
 
                                 <td class="section-text-area" *ngIf="!permissionToDelete">
                                     <div class="icon area">
-                                        <button mat-icon-button type="button" [disableRipple]="true"
+                                        <button mat-icon-button type="button" color="primary" [disableRipple]="true"
                                             class="section-row-icon" matTooltip="Delete Section"
                                             (click)="deleteQuestionSection(i)">
                                             <mat-icon [inline]="true">clear</mat-icon>

@@ -19,12 +19,15 @@ export class EditAccountComponent implements OnInit, AfterViewInit{
   type = "Create";
 
   categoryList: Category[] = [
-    { categoryId: 1, description: 'Extra cheese' },
-    { categoryId: 2, description: 'Mushroom' },
-    { categoryId: 3, description: 'Onion' },
-    { categoryId: 4, description: 'Pepperoni' },
-    { categoryId: 5, description: 'Sausage' },
-    { categoryId: 6, description: 'Tomato' }];
+    { categoryId: 1, description: 'General' },
+    { categoryId: 2, description: 'Finance' },
+    { categoryId: 3, description: 'Email' },
+    { categoryId: 4, description: 'Jobs' },
+    { categoryId: 5, description: 'Health' },
+    { categoryId: 6, description: 'Insurance' },
+    { categoryId: 7, description: 'Job Benefit' },
+    { categoryId: 8, description: 'Investment' },
+  ];
 
   constructor(
     private accountsService: AccountService,
